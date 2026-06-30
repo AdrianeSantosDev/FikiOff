@@ -1,8 +1,4 @@
 {
   "name": "MinutoOfflineTemp",
-  "extra": {
-    "eas": {
-      "projectId": "f4cf46ef-3741-45ff-8615-30cc651c09d5"
-    }
-  }
+  "displayName": "MinutoOffline"
 }
