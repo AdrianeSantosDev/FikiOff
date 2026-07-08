@@ -29,7 +29,7 @@ export default function TimerDisplay({ elapsedMs, isOffline }: Props) {
       <Animated.Text style={[styles.timer, { color }]}>
         {msToHMS(elapsedMs)}
       </Animated.Text>
-      <Text style={styles.unit}>hh : mm : ss</Text>
+      <Text style={styles.unit}>mm : ss , ms</Text>
     </View>
   );
 }

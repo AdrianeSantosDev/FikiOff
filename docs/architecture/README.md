@@ -1,4 +1,4 @@
-# Arquitetura — Minuto Offline
+# Arquitetura — Fiki Off
 
 Documentação alinhada ao **TOGAF ADM** (Architecture Development Method).
 

@@ -1,4 +1,4 @@
-# Documentação — Minuto Offline
+# Documentação — Fiki Off
 
 Índice da documentação arquitetural e operacional do projeto.
 

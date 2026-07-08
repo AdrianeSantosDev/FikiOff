@@ -129,6 +129,7 @@ export default function HomeScreen() {
 
   // 3. CONTROLE EXCLUSIVO DO BOTÃO FIKIOFF (Apenas Redirecionamento)
   const handleMainButtonPress = () => {
+    // toggle()
     if (!isOffline) {
       // Se está online, avisa o app que estamos indo ATIVAR o modo avião e abre o modal/configurações
       isActivationPendingRef.current = true;
@@ -182,7 +183,7 @@ export default function HomeScreen() {
     <Animated.View style={[styles.root, { backgroundColor }]}>
       <SafeAreaView style={styles.safe}>
         {/* ── Status Bar ── */}
-        <View style={styles.statusBar}>
+        {/* <View style={styles.statusBar}>
           <Text style={styles.statusTime}>{clockTime}</Text>
           <View style={styles.statusIcons}>
             {isOffline ? (
@@ -196,11 +197,11 @@ export default function HomeScreen() {
             )}
             <Text style={styles.batteryIcon}>▮</Text>
           </View>
-        </View>
+        </View> */}
 
         {/* ── App Header ── */}
         <View style={styles.header}>
-          <Text style={styles.appTitle}>Minuto Offline</Text>
+          <Text style={styles.appTitle}>Fiki Off</Text>
           <Text style={styles.appSubtitle}>
             {isOffline ? 'Modo Avião' : 'Online'}
           </Text>
@@ -280,6 +281,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: theme.colors.textPrimary,
     letterSpacing: 0.8,
+    paddingTop: Platform.OS === 'android' ? 36 : 42
   },
   appSubtitle: {
     fontSize: 10,

@@ -1,6 +1,6 @@
-# Minuto Offline
+# Fiki Off
 
-Protótipo funcional em React Native do app Minuto Offline.
+Protótipo funcional em React Native do app Fiki Off.
 
 https://github.com/user-attachments/assets/902c3179-5ad5-4b83-b70e-44d54b08dc40
 
@@ -17,7 +17,7 @@ Artefatos de infraestrutura:
 ## Estrutura de arquivos
 
 ```
-MinutoOffline/
+FikiOff/
 ├── App.tsx
 ├── docs/                    ← arquitetura TOGAF, ADRs, segurança, ops
 ├── firestore.rules

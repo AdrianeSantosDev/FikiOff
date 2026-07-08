@@ -1,6 +1,6 @@
 rules_version = '2';
 
-// Regras de segurança Firestore — Minuto Offline
+// Regras de segurança Firestore — Fiki Off
 // Documentação: docs/architecture/data-model.md
 // Deploy: firebase deploy --only firestore:rules
 

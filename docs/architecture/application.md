@@ -1,4 +1,4 @@
-# Arquitetura de aplicação — Minuto Offline
+# Arquitetura de aplicação — Fiki Off
 
 **Fase TOGAF:** D (Application Architecture)
 

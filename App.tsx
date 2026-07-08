@@ -1,27 +1,32 @@
 // import React from 'react';
 // import { StatusBar } from 'react-native';
-// import HomeScreen from './src/screens/HomeScreen';
-// import { WATERCOLOR_THEME as theme } from './src/theme';
 // import { NavigationContainer } from '@react-navigation/native';
-// import { createStackNavigator } from '@react-navigation/stack';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+// import HomeScreen from './src/screens/HomeScreen';
+// // import DetailsScreen from './src/screens/Galery'; // Exemplo de outra tela
+// import { WATERCOLOR_THEME as theme } from './src/theme';
+
+// const Stack = createNativeStackNavigator();
 
 // export default function App() {
 //   return (
-//     <>
-//       <StatusBar barStyle="dark-content" backgroundColor={theme.colors.background} />
-//       <NavigationContainer>
-//         <Stack.Navigator
-//           initialRouteName="EventosScreen"
-//           screenOptions={{
-//             headerShown: false // Remove a barra de topo padrão do Navigation para usar o seu design customizado
-//           }}
-//         >
-//           <Stack.Screen name="EventosScreen" component={EventosScreen} />
-//           <Stack.Screen name="MapaScreen" component={MapaScreen} />
-//           <Stack.Screen name="HomeScreen" component={HomeScreen} />
-//         </Stack.Navigator>
-//       </NavigationContainer>
-//     </>
+//     <NavigationContainer>
+//       <StatusBar barStyle="dark-content" backgroundColor={theme.colors.background} />  
+      
+//       <Stack.Navigator initialRouteName="Home">
+//         <Stack.Screen 
+//           name="Home" 
+//           component={HomeScreen} 
+//           options={{ title: 'Início' }}
+//         />
+//         <Stack.Screen 
+//           name="Details" 
+//           component={DetailsScreen} 
+//           options={{ title: 'Detalhes' }}
+//         />
+//       </Stack.Navigator>
+//     </NavigationContainer>
 //   );
 // }
 
