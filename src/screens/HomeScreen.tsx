@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Platform,
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
@@ -10,6 +9,7 @@ import {
   AppState,
   Linking,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import NetInfo from '@react-native-community/netinfo';
 import AirplaneModeModal from '../components/AirplaneModeModal';
 
@@ -18,7 +18,7 @@ import TimerDisplay from '../components/TimerDisplay';
 import StatsRow from '../components/StatsRow';
 import SessionHistory from '../components/SessionHistory';
 import { useOfflineTimer } from '../hooks/useOfflineTimer';
-import { WATERCOLOR_THEME as theme } from '../theme';
+import { WATERCOLOR_THEME as theme } from '../constants/theme';
 
 function pad(n: number) {
   return String(n).padStart(2, '0');
@@ -67,78 +67,74 @@ export default function HomeScreen() {
     }
   }, [isOffline]);
 
-  // 1. MONITORAMENTO EM TEMPO REAL (Com o app aberto na tela)
-  useEffect(() => {
-    // Se o app não estiver em modo offline, não há necessidade de monitorar
-    if (!isOffline) return;
+  // 1. MONITORAMENTO EM TEMPO REAL (Caso ele desative com o app aberto na tela)
+    useEffect(() => {
+      if (!isOffline) return;
 
-    // Escuta qualquer mudança de rede enquanto o usuário está com o app aberto
-    const unsubscribe = NetInfo.addEventListener(state => {
-      // Se o dispositivo se conectar à rede e a internet estiver ativa
-      if (state.isConnected && state.isInternetReachable !== false) {
-        invalidateSession();
-        Alert.alert(
-          'Sessão Cancelada 💧',
-          'Detectamos que você desativou o Modo Avião ou se conectou à internet. A sessão atual foi invalidada.',
-        );
-      }
-    });
-    return () => unsubscribe();
-  }, [isOffline, invalidateSession]);
+      const unsubscribe = NetInfo.addEventListener(state => {
+        const hasInternet = state.isConnected && state.isInternetReachable !== false;
 
-  // 2. CICLO DE VIDA (A mágica do Start/Stop automático ao ir e voltar do background)
-  useEffect(() => {
-    const handleAppStateChange = async nextAppState => {
-      // Quando o app volta para o primeiro plano (Foreground)
-      if (nextAppState === 'active') {
-        const state = await NetInfo.fetch();
-        const hasInternet =
-          state.isConnected && state.isInternetReachable !== false;
-
-        // CASO A: Usuário acabou de voltar após ativar o Modo Avião
-        if (!isOffline && !hasInternet && isActivationPendingRef.current) {
-          isActivationPendingRef.current = false;
-          toggle(); // Dispara o cronômetro AUTOMATICAMENTE
-          return;
-        }
-
-        // CASO B: Usuário voltou para o app e a internet está de volta
-        if (isOffline && hasInternet) {
-          if (isDeactivationPendingRef.current) {
-            // FIM LEGAL: Ele usou o botão do app para ir desligar o modo avião. Sucesso!
-            isDeactivationPendingRef.current = false;
-            toggle(); // Salva a sessão e computa os minutos normalmente
-          } else {
-            // BURLA: O app voltou pro primeiro plano com internet, mas ele não usou o fluxo do botão
+        if (hasInternet) {
+          // Se ele desligou o modo avião por fora (pela barra de notificações) enquanto olhava pro app
+          if (!isDeactivationPendingRef.current) {
             invalidateSession();
-            Alert.alert(
-              'Sessão Cancelada 💧',
-              'Detectamos que o Modo Avião foi desativado em segundo plano de forma irregular.',
-            );
+            Alert.alert("Sessão Invalidada 🚫", "Você desativou o Modo Avião sem usar o fluxo do aplicativo.");
           }
         }
+      });
+
+      return () => unsubscribe();
+    }, [isOffline, invalidateSession]);
+
+
+    // 2. CICLO DE VIDA (A mágica do Start/Stop automático ao ir e voltar do background)
+    useEffect(() => {
+      const handleAppStateChange = async (nextAppState) => {
+
+        // Quando o app volta para o primeiro plano (Foreground)
+        if (nextAppState === 'active') {
+          const state = await NetInfo.fetch();
+          const hasInternet = state.isConnected && state.isInternetReachable !== false;
+
+          // CASO A: Usuário acabou de voltar após ativar o Modo Avião
+          if (!isOffline && !hasInternet && isActivationPendingRef.current) {
+            isActivationPendingRef.current = false;
+            toggle(); // Dispara o cronômetro AUTOMATICAMENTE
+            return;
+          }
+
+          // CASO B: Usuário voltou para o app e a internet está de volta
+          if (isOffline && hasInternet) {
+            if (isDeactivationPendingRef.current) {
+              // FIM LEGAL: Ele usou o botão do app para ir desligar o modo avião. Sucesso!
+              isDeactivationPendingRef.current = false;
+              toggle(); // Salva a sessão e computa os minutos normalmente
+            } else {
+              // BURLA: O app voltou pro primeiro plano com internet, mas ele não usou o fluxo do botão
+              invalidateSession();
+              Alert.alert("Sessão Cancelada 💧", "Detectamos que o Modo Avião foi desativado em segundo plano de forma irregular.");
+            }
+          }
+        }
+      };
+
+      const subscription = AppState.addEventListener('change', handleAppStateChange);
+      return () => subscription.remove();
+    }, [isOffline, toggle, invalidateSession]);
+
+
+    // 3. CONTROLE EXCLUSIVO DO BOTÃO FIKIOFF (Apenas Redirecionamento)
+    const handleMainButtonPress = () => {
+      if (!isOffline) {
+        // Se está online, avisa o app que estamos indo ATIVAR o modo avião e abre o modal/configurações
+        isActivationPendingRef.current = true;
+        setModalVisible(true);
+      } else {
+        // Se já está na sessão, avisa o app que estamos saindo para DESATIVAR o modo avião legalmente
+        isDeactivationPendingRef.current = true;
+        openDeviceSettings();
       }
     };
-
-    const subscription = AppState.addEventListener(
-      'change',
-      handleAppStateChange,
-    );
-    return () => subscription.remove();
-  }, [isOffline, toggle, invalidateSession]);
-
-  // 3. CONTROLE EXCLUSIVO DO BOTÃO FIKIOFF (Apenas Redirecionamento)
-  const handleMainButtonPress = () => {
-    if (!isOffline) {
-      // Se está online, avisa o app que estamos indo ATIVAR o modo avião e abre o modal/configurações
-      isActivationPendingRef.current = true;
-      setModalVisible(true);
-    } else {
-      // Se já está na sessão, avisa o app que estamos saindo para DESATIVAR o modo avião legalmente
-      isDeactivationPendingRef.current = true;
-      openDeviceSettings();
-    }
-  };
   // Clock tick
   useEffect(() => {
     const id = setInterval(() => setClockTime(getCurrentTime()), 10000);
@@ -181,23 +177,6 @@ export default function HomeScreen() {
   return (
     <Animated.View style={[styles.root, { backgroundColor }]}>
       <SafeAreaView style={styles.safe}>
-        {/* ── Status Bar ── */}
-        <View style={styles.statusBar}>
-          <Text style={styles.statusTime}>{clockTime}</Text>
-          <View style={styles.statusIcons}>
-            {isOffline ? (
-              <Text style={styles.airplaneIcon}>💧</Text>
-            ) : (
-              <View style={styles.signalBars}>
-                {[4, 7, 10, 13].map((h, i) => (
-                  <View key={i} style={[styles.bar, { height: h }]} />
-                ))}
-              </View>
-            )}
-            <Text style={styles.batteryIcon}>▮</Text>
-          </View>
-        </View>
-
         {/* ── App Header ── */}
         <View style={styles.header}>
           <Text style={styles.appTitle}>Minuto Offline</Text>

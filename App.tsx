@@ -1,40 +1,33 @@
-// import React from 'react';
-// import { StatusBar } from 'react-native';
-// import HomeScreen from './src/screens/HomeScreen';
-// import { WATERCOLOR_THEME as theme } from './src/theme';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createStackNavigator } from '@react-navigation/stack';
-
-// export default function App() {
-//   return (
-//     <>
-//       <StatusBar barStyle="dark-content" backgroundColor={theme.colors.background} />
-//       <NavigationContainer>
-//         <Stack.Navigator
-//           initialRouteName="EventosScreen"
-//           screenOptions={{
-//             headerShown: false // Remove a barra de topo padrão do Navigation para usar o seu design customizado
-//           }}
-//         >
-//           <Stack.Screen name="EventosScreen" component={EventosScreen} />
-//           <Stack.Screen name="MapaScreen" component={MapaScreen} />
-//           <Stack.Screen name="HomeScreen" component={HomeScreen} />
-//         </Stack.Navigator>
-//       </NavigationContainer>
-//     </>
-//   );
-// }
-
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import LoadingScreen from './src/screens/LoadingScreen';
 import HomeScreen from './src/screens/HomeScreen';
-import { WATERCOLOR_THEME as theme } from './src/theme';
+import EventosScreen from './src/screens/EventsScreen';
+import MapaScreen from './src/screens/MapScreen';
+
+export type RootStackParamList = {
+  Loading: undefined;
+  Home: undefined;
+  EventosScreen: undefined;
+  MapaScreen: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <>
-      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.background} />  
-      <HomeScreen />
-    </>
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="Loading"
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="Loading" component={LoadingScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="EventosScreen" component={EventosScreen} />
+        <Stack.Screen name="MapaScreen" component={MapaScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }

@@ -1,8 +1,11 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useRouter } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function EventosScreen({ navigation }) {
+export default function EventosScreen() {
+  const router = useRouter();
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -18,7 +21,7 @@ export default function EventosScreen({ navigation }) {
       {/* Conteúdo Principal */}
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.cardsRow}>
-          
+
           {/* Card 1 */}
           <View style={styles.card}>
             <View style={[styles.cardImagePlaceholder, { backgroundColor: '#1a2e5a' }]}>
@@ -71,9 +74,9 @@ export default function EventosScreen({ navigation }) {
         </View>
 
         {/* Botão de navegação para ir à tela do Mapa */}
-        <TouchableOpacity 
-          style={styles.navButton} 
-          onPress={() => navigation.navigate('MapaScreen')}
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => router.push('/map')}
         >
           <Text style={styles.navButtonText}>Ver Mapa / Distribuição</Text>
           <Icon name="arrow-forward" size={20} color="#fff" />

@@ -1,8 +1,10 @@
-import React from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useRouter } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function MapaScreen({ navigation }) {
+export default function MapaScreen() {
+  const router = useRouter();
   // Dados simulados do histórico de doações
   const doacoes = [
     { id: '1', data: '10/06', minutos: '109 Minutos' },
@@ -59,9 +61,9 @@ export default function MapaScreen({ navigation }) {
         ))}
 
         {/* Botão para voltar */}
-        <TouchableOpacity 
-          style={styles.backButton} 
-          onPress={() => navigation.goBack()}
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.back()}
         >
           <Icon name="arrow-back" size={20} color="#00d7c3" />
           <Text style={styles.backButtonText}>Voltar para Eventos</Text>

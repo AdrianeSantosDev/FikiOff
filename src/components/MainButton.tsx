@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-native';
-import { WATERCOLOR_THEME as theme } from '../theme';
+import { WATERCOLOR_THEME as theme } from '../constants/theme';
 
 interface Props {
   isOffline: boolean;

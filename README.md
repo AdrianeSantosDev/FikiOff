@@ -1,163 +1,56 @@
-# Minuto Offline
+# Welcome to your Expo app 👋
 
-Protótipo funcional em React Native do app Minuto Offline.
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-https://github.com/user-attachments/assets/902c3179-5ad5-4b83-b70e-44d54b08dc40
+## Get started
 
-## Documentação de arquitetura
+1. Install dependencies
 
-A documentação TOGAF (negócio, dados, aplicação, tecnologia, C4, ADRs, segurança e ops) está em **[`docs/`](docs/README.md)**.
+   ```bash
+   npm install
+   ```
 
-Artefatos de infraestrutura:
+2. Start the app
 
-- [`firestore.rules`](firestore.rules) — regras de segurança Firestore
-- [`firebase.json`](firebase.json) — configuração Firebase CLI
-- [`.firebaserc.example`](.firebaserc.example) — template de projetos Firebase
+   ```bash
+   npx expo start
+   ```
 
-## Estrutura de arquivos
+In the output, you'll find options to open the app in a
 
-```
-MinutoOffline/
-├── App.tsx
-├── docs/                    ← arquitetura TOGAF, ADRs, segurança, ops
-├── firestore.rules
-├── firebase.json
-├── package.json
-└── src/
-    ├── hooks/
-    │   └── useOfflineTimer.ts       ← lógica principal do timer
-    ├── components/
-    │   ├── MainButton.tsx           ← botão central animado
-    │   ├── TimerDisplay.tsx         ← exibição hh:mm:ss
-    │   ├── StatsRow.tsx             ← cards de estatísticas
-    │   └── SessionHistory.tsx       ← histórico de sessões
-    └── screens/
-        └── HomeScreen.tsx           ← tela principal
-```
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-## Como rodar
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-### Pré-requisitos
-- Node.js >= 18
-- React Native CLI (`npm install -g react-native-cli`)
-- Android Studio (para Android) ou Xcode (para iOS)
+## Get a fresh project
 
-### Instalação
+When you're ready, run:
 
 ```bash
-npm install
-
-# iOS (macOS apenas)
-cd ios && pod install && cd ..
+npm run reset-project
 ```
 
-### Executar
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-```bash
-# Android
-npm run android
+### Other setup steps
 
-# iOS
-npm run ios
-```
+- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
+- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
+- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
 
----
+## Learn more
 
-## Funcionalidade principal
+To learn more about developing your project with Expo, look at the following resources:
 
-O hook `useOfflineTimer` centraliza toda a lógica:
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-- `isOffline` — estado atual
-- `elapsedMs` — milissegundos da sessão atual (atualizado a cada segundo)
-- `totalTodayMs` — total acumulado do dia
-- `sessionCount` — número de sessões
-- `history` — últimas 5 sessões (horário de início + duração)
-- `toggle()` — inicia ou encerra uma sessão
+## Join the community
 
----
+Join our community of developers creating universal apps.
 
-## Ativar o Modo Avião de verdade (opcional)
-
-### Android
-
-Instale o pacote nativo:
-
-```bash
-npm install react-native-airplane-mode-control
-```
-
-Adicione a permissão no `android/app/src/main/AndroidManifest.xml`:
-
-```xml
-<uses-permission android:name="android.permission.WRITE_SETTINGS" />
-```
-
-Descomente o bloco no topo de `HomeScreen.tsx`:
-
-```tsx
-import AirplaneMode from 'react-native-airplane-mode-control';
-
-async function setAirplaneMode(enable: boolean) {
-  if (Platform.OS === 'android') {
-    await AirplaneMode.setAirplaneMode(enable);
-  }
-}
-```
-
-E chame `setAirplaneMode(true)` ao iniciar e `setAirplaneMode(false)` ao encerrar dentro de `handleToggle`.
-
-### iOS
-
-No iOS **não é possível** ativar o modo avião programaticamente (restrição da Apple).
-A abordagem recomendada é abrir as Configurações com um alerta:
-
-```tsx
-import { Alert, Linking } from 'react-native';
-
-Alert.alert(
-  'Ativar modo avião',
-  'Vá em Configurações > Modo Avião para ativar manualmente.',
-  [
-    { text: 'Abrir Configurações', onPress: () => Linking.openURL('App-Prefs:root=AIRPLANE_MODE') },
-    { text: 'OK' },
-  ]
-);
-```
-
----
-
-## Timer em background (opcional)
-
-Para manter o timer contando com o app minimizado:
-
-```bash
-npm install react-native-background-timer
-```
-
-Substitua o `setInterval` nativo em `useOfflineTimer.ts`:
-
-```tsx
-import BackgroundTimer from 'react-native-background-timer';
-
-// no lugar de setInterval:
-intervalRef.current = BackgroundTimer.setInterval(() => {
-  if (startTimeRef.current) {
-    setElapsedMs(Date.now() - startTimeRef.current);
-  }
-}, 1000);
-
-// no lugar de clearInterval:
-BackgroundTimer.clearInterval(intervalRef.current);
-```
-
----
-
-## Persistência de dados (opcional)
-
-Para salvar o histórico entre sessões, use AsyncStorage:
-
-```bash
-npm install @react-native-async-storage/async-storage
-```
-
-Salve e carregue `totalTodayMs`, `sessionCount` e `history` no hook.
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
