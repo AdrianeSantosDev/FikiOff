@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import HeaderMenu from '../components/HeaderMenu';
+const LogoImage = require("../../assets/fikioff_logo_completo.png");
 
 export default function MapaScreen() {
   const router = useRouter();
@@ -17,9 +19,9 @@ export default function MapaScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Icon name="menu" size={30} color="#fff" style={styles.menuIcon} />
+        <HeaderMenu />
         <View style={styles.logoRow}>
-          <Text style={styles.logoText}>FikiOff</Text>
+          <Image source={LogoImage} style={styles.logoImage} />
           <Icon name="opacity" size={24} color="#2dcf54" style={{ marginLeft: 5 }} />
         </View>
 
@@ -114,5 +116,11 @@ const styles = StyleSheet.create({
   minutesBadge: { backgroundColor: '#ffeeda', paddingVertical: 6, paddingHorizontal: 12, borderRadius: 15 },
   minutesText: { color: '#ff991f', fontWeight: 'bold', fontSize: 12 },
   backButton: { flexDirection: 'row', marginTop: 20, alignSelf: 'center', alignItems: 'center', padding: 10 },
-  backButtonText: { color: '#00d7c3', fontWeight: 'bold', marginLeft: 8 }
+  backButtonText: { color: '#00d7c3', fontWeight: 'bold', marginLeft: 8 },
+  logoImage: {
+      width: '70%',
+      maxWidth: 335,
+      height: 100,
+      marginBottom: 50,
+    },
 });

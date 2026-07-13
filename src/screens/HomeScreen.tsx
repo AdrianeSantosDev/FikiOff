@@ -12,6 +12,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import NetInfo from '@react-native-community/netinfo';
 import AirplaneModeModal from '../components/AirplaneModeModal';
+import HeaderMenu from '../components/HeaderMenu';
 
 import MainButton from '../components/MainButton';
 import TimerDisplay from '../components/TimerDisplay';
@@ -179,6 +180,7 @@ export default function HomeScreen() {
       <SafeAreaView style={styles.safe}>
         {/* ── App Header ── */}
         <View style={styles.header}>
+          <HeaderMenu />
           <Text style={styles.appTitle}>Minuto Offline</Text>
           <Text style={styles.appSubtitle}>
             {isOffline ? 'Modo Avião' : 'Online'}
@@ -253,7 +255,7 @@ const styles = StyleSheet.create({
   batteryIcon: { fontSize: 14, color: theme.colors.textSecondary },
 
   // Header
-  header: { alignItems: 'center', marginBottom: 12 },
+  header: { alignItems: 'center', marginBottom: 12, position: 'relative' },
   appTitle: {
     fontSize: 18,
     fontWeight: '700',

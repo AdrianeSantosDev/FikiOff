@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-nati
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import HeaderMenu from '../components/HeaderMenu';
 
 export default function EventosScreen() {
   const router = useRouter();
@@ -10,7 +11,7 @@ export default function EventosScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Icon name="menu" size={30} color="#fff" />
+        <HeaderMenu />
         <View style={styles.logoContainer}>
           <Text style={styles.logoTitle}>casa</Text>
           <Text style={styles.logoSubtitle}>OFFLINE</Text>
