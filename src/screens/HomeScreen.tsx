@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+
+// Design
 import {
   Animated,
   Platform,
@@ -9,16 +11,21 @@ import {
   Alert,
   AppState,
   Linking,
+  Pressable,
 } from 'react-native';
-import NetInfo from '@react-native-community/netinfo';
-import AirplaneModeModal from '../components/AirplaneModeModal';
 
-import MainButton from '../components/MainButton';
-import TimerDisplay from '../components/TimerDisplay';
+// Internal
 import StatsRow from '../components/StatsRow';
+import MainButton from '../components/MainButton';
+import { WATERCOLOR_THEME as theme } from '../theme';
+import TimerDisplay from '../components/TimerDisplay';
 import SessionHistory from '../components/SessionHistory';
 import { useOfflineTimer } from '../hooks/useOfflineTimer';
-import { WATERCOLOR_THEME as theme } from '../theme';
+import AirplaneModeModal from '../components/AirplaneModeModal';
+
+// Third-party
+import { router } from 'expo-router';
+import NetInfo from '@react-native-community/netinfo';
 
 function pad(n: number) {
   return String(n).padStart(2, '0');
@@ -68,27 +75,27 @@ export default function HomeScreen() {
   }, [isOffline]);
 
   // 1. MONITORAMENTO EM TEMPO REAL (Com o app aberto na tela)
-  useEffect(() => {
-    // Se o app não estiver em modo offline, não há necessidade de monitorar
-    if (!isOffline) return;
+  // useEffect(() => {
+  //   // Se o app não estiver em modo offline, não há necessidade de monitorar
+  //   if (!isOffline) return;
 
-    // Escuta qualquer mudança de rede enquanto o usuário está com o app aberto
-    const unsubscribe = NetInfo.addEventListener(state => {
-      // Se o dispositivo se conectar à rede e a internet estiver ativa
-      if (state.isConnected && state.isInternetReachable !== false) {
-        invalidateSession();
-        Alert.alert(
-          'Sessão Cancelada 💧',
-          'Detectamos que você desativou o Modo Avião ou se conectou à internet. A sessão atual foi invalidada.',
-        );
-      }
-    });
-    return () => unsubscribe();
-  }, [isOffline, invalidateSession]);
+  //   // Escuta qualquer mudança de rede enquanto o usuário está com o app aberto
+  //   const unsubscribe = NetInfo.addEventListener(state => {
+  //     // Se o dispositivo se conectar à rede e a internet estiver ativa
+  //     if (state.isConnected && state.isInternetReachable !== false) {
+  //       invalidateSession();
+  //       Alert.alert(
+  //         'Sessão Cancelada 💧',
+  //         'Detectamos que você desativou o Modo Avião ou se conectou à internet. A sessão atual foi invalidada.',
+  //       );
+  //     }
+  //   });
+  //   return () => unsubscribe();
+  // }, [isOffline, invalidateSession]);
 
   // 2. CICLO DE VIDA (A mágica do Start/Stop automático ao ir e voltar do background)
   useEffect(() => {
-    const handleAppStateChange = async nextAppState => {
+    const handleAppStateChange = async (nextAppState: any) => {
       // Quando o app volta para o primeiro plano (Foreground)
       if (nextAppState === 'active') {
         const state = await NetInfo.fetch();
@@ -129,16 +136,16 @@ export default function HomeScreen() {
 
   // 3. CONTROLE EXCLUSIVO DO BOTÃO FIKIOFF (Apenas Redirecionamento)
   const handleMainButtonPress = () => {
-    // toggle()
-    if (!isOffline) {
-      // Se está online, avisa o app que estamos indo ATIVAR o modo avião e abre o modal/configurações
-      isActivationPendingRef.current = true;
-      setModalVisible(true);
-    } else {
-      // Se já está na sessão, avisa o app que estamos saindo para DESATIVAR o modo avião legalmente
-      isDeactivationPendingRef.current = true;
-      openDeviceSettings();
-    }
+    toggle()
+    // if (!isOffline) {
+    //   // Se está online, avisa o app que estamos indo ATIVAR o modo avião e abre o modal/configurações
+    //   isActivationPendingRef.current = true;
+    //   setModalVisible(true);
+    // } else {
+    //   // Se já está na sessão, avisa o app que estamos saindo para DESATIVAR o modo avião legalmente
+    //   isDeactivationPendingRef.current = true;
+    //   openDeviceSettings();
+    // }
   };
   // Clock tick
   useEffect(() => {
@@ -216,6 +223,41 @@ export default function HomeScreen() {
           <Text style={[styles.statusMsg, isOffline && styles.statusMsgActive]}>
             {statusText}
           </Text>
+          {isOffline && 
+          <Pressable onPress={() => router.push('/events')}  
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            // padding: "0px 2px",
+            gap: "10px",
+            width: 211,
+            height: 44,
+            backgroundColor: "rgba(19, 219, 208, 0.08)",
+            boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+            borderRadius: 20,
+            // flex: "none",
+            // order: 0,
+            flexGrow: 0,
+          }}>
+            <Text style={{
+                width: 129,
+                height: 30,
+                fontFamily: 'Poppins',
+                fontStyle: "normal",
+                fontWeight: 800,
+                fontSize: 20,
+                lineHeight: 30,
+                textAlign: "center",
+                color: "#607D8B",
+                // flex: "none",
+                // order: 0,
+                flexGrow: 0,
+            }}>
+              Rolês Offline
+            </Text>
+          </Pressable>}
         </View>
 
         {/* ── Stats ── */}
@@ -231,11 +273,11 @@ export default function HomeScreen() {
         <AirplaneModeModal
           visible={modalVisible}
           onClose={() => setModalVisible(false)}
-          // Sobrescrevemos o comportamento interno do modal para marcar a flag antes de abrir as configs
-          onOpenSettings={() => {
-            setModalVisible(false);
-            openDeviceSettings();
-          }}
+          // // Sobrescrevemos o comportamento interno do modal para marcar a flag antes de abrir as configs
+          // onOpenSettings={() => {
+          //   setModalVisible(false);
+          //   openDeviceSettings();
+          // }}
         />
       </SafeAreaView>
     </Animated.View>

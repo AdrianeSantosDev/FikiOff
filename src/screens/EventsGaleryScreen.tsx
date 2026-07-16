@@ -1,8 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function EventosScreen({ navigation }) {
+// Design
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
+import { MaterialIcons as Icon } from '@expo/vector-icons';
+
+// Third-party
+import { router } from 'expo-router';
+
+export default function EventosScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -25,21 +30,21 @@ export default function EventosScreen({ navigation }) {
               <Text style={styles.cardImageText}>Cronicamente Off-line</Text>
             </View>
             <View style={styles.timerBadge}>
-              <Icon name="access-time" size={14} color="#2dcf54" />
+              {/* <Icon name="access-time" size={14} color="#2dcf54" /> */}
               <Text style={styles.timerText}>5 dias para o evento</Text>
             </View>
             <Text style={styles.eventTitle}>Bate-papo Literário</Text>
             <Text style={styles.eventSubtitle}>Clube Cronicamente Offline</Text>
             <View style={styles.infoRow}>
-              <Icon name="place" size={16} color="#2dcf54" />
+              {/* <Icon name="place" size={16} color="#2dcf54" /> */}
               <Text style={styles.infoText}>Pinheiros</Text>
             </View>
             <View style={styles.infoRow}>
-              <Icon name="event" size={16} color="#2dcf54" />
+              {/* <Icon name="event" size={16} color="#2dcf54" /> */}
               <Text style={styles.infoText}>Dia 20/06</Text>
             </View>
             <TouchableOpacity style={styles.button}>
-              <Icon name="shopping-cart" size={16} color="#105b5c" />
+              {/* <Icon name="shopping-cart" size={16} color="#105b5c" /> */}
               <Text style={styles.buttonText}>Obter Ingressos</Text>
             </TouchableOpacity>
           </View>
@@ -50,20 +55,20 @@ export default function EventosScreen({ navigation }) {
               <Text style={styles.cardImageText}>Jogos de Tabuleiro</Text>
             </View>
             <View style={styles.timerBadge}>
-              <Icon name="access-time" size={14} color="#2dcf54" />
+              {/* <Icon name="access-time" size={14} color="#2dcf54" /> */}
               <Text style={styles.timerText}>12 dias para o evento</Text>
             </View>
             <Text style={styles.eventTitle}>Jogos de Tabuleiro</Text>
             <View style={styles.infoRow}>
-              <Icon name="place" size={16} color="#2dcf54" />
+              {/* <Icon name="place" size={16} color="#2dcf54" /> */}
               <Text style={styles.infoText}>Pinheiros</Text>
             </View>
             <View style={styles.infoRow}>
-              <Icon name="event" size={16} color="#2dcf54" />
+              {/* <Icon name="event" size={16} color="#2dcf54" /> */}
               <Text style={styles.infoText}>Dia 20/06</Text>
             </View>
             <TouchableOpacity style={styles.button}>
-              <Icon name="shopping-cart" size={16} color="#105b5c" />
+              {/* <Icon name="shopping-cart" size={16} color="#105b5c" /> */}
               <Text style={styles.buttonText}>Obter Ingressos</Text>
             </TouchableOpacity>
           </View>
@@ -73,10 +78,10 @@ export default function EventosScreen({ navigation }) {
         {/* Botão de navegação para ir à tela do Mapa */}
         <TouchableOpacity 
           style={styles.navButton} 
-          onPress={() => navigation.navigate('MapaScreen')}
+          onPress={() => router.push('/map')}
         >
           <Text style={styles.navButtonText}>Ver Mapa / Distribuição</Text>
-          <Icon name="arrow-forward" size={20} color="#fff" />
+          {/* <Icon name="arrow-forward" size={20} color="#fff" /> */}
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
