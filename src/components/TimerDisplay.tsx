@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 import { msToHMS } from '../hooks/useOfflineTimer';
-import { WATERCOLOR_THEME as theme } from '../theme';
+import { WATERCOLOR_THEME as theme } from '../constants/theme';
 
 interface Props {
   elapsedMs: number;
@@ -29,7 +29,7 @@ export default function TimerDisplay({ elapsedMs, isOffline }: Props) {
       <Animated.Text style={[styles.timer, { color }]}>
         {msToHMS(elapsedMs)}
       </Animated.Text>
-      <Text style={styles.unit}>hh : mm : ss</Text>
+      <Text style={styles.unit}>mm : ss , ms</Text>
     </View>
   );
 }

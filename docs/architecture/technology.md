@@ -1,4 +1,4 @@
-# Arquitetura de tecnologia — Minuto Offline
+# Arquitetura de tecnologia — Fiki Off
 
 **Fase TOGAF:** E (Technology Architecture)
 

@@ -1,4 +1,4 @@
-# Visão arquitetural — Minuto Offline
+# Visão arquitetural — Fiki Off
 
 **Versão:** 1.0  
 **Data:** 2026-05-20  
@@ -8,7 +8,7 @@
 
 ## 1. Propósito
 
-O **Minuto Offline** é um aplicativo mobile que registra o tempo em que o usuário permanece intencionalmente “offline” (sessões iniciadas manualmente no app) e, na arquitetura alvo, permite **autenticação social** e **competição em rankings** (diário e geral) com outros usuários.
+O **Fiki Off** é um aplicativo mobile que registra o tempo em que o usuário permanece intencionalmente “offline” (sessões iniciadas manualmente no app) e, na arquitetura alvo, permite **autenticação social** e **competição em rankings** (diário e geral) com outros usuários.
 
 ## 2. Objetivos de negócio
 
@@ -66,7 +66,7 @@ flowchart TB
   end
 
   PO --> DEV
-  U --> App[Minuto Offline]
+  U --> App[Fiki Off]
   DEV --> App
   OPS --> App
   LGL --> PO

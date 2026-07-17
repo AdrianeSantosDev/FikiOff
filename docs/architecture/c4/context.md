@@ -1,6 +1,6 @@
 # C4 — Nível 1: Diagrama de contexto
 
-O diagrama de contexto mostra o sistema **Minuto Offline** e suas interações com usuários e sistemas externos.
+O diagrama de contexto mostra o sistema **Fiki Off** e suas interações com usuários e sistemas externos.
 
 ---
 
@@ -10,7 +10,7 @@ O diagrama de contexto mostra o sistema **Minuto Offline** e suas interações c
 flowchart TB
   User([Usuario mobile])
 
-  subgraph system [Sistema Minuto Offline]
+  subgraph system [Sistema Fiki Off]
     App[App React Native]
   end
 
@@ -42,7 +42,7 @@ flowchart TB
 
 ## Escopo do sistema
 
-**Dentro da caixa “Minuto Offline”:** lógica de timer, UI, cache local, integração Firebase.
+**Dentro da caixa “Fiki Off”:** lógica de timer, UI, cache local, integração Firebase.
 
 **Fora:** infraestrutura Google Cloud gerenciada pelo Firebase, políticas das lojas, configurações do SO (modo avião).
 

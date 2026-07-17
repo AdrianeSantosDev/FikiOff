@@ -1,4 +1,26 @@
 {
-  "name": "MinutoOfflineTemp",
-  "displayName": "MinutoOffline"
+  "name": "FikiOff",
+  "displayName": "FikiOff",
+  "extra": {
+    "eas": {
+      "projectId": "6f2672b1-c864-4de6-a9b5-599949059be9"
+    }
+  },
+  "expo": {
+    "android": {
+      "package": "com.fikioff"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6f2672b1-c864-4de6-a9b5-599949059be9"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.fikioff"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-status-bar"
+    ]
+  }
 }

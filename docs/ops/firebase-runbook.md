@@ -1,4 +1,4 @@
-# Runbook — Firebase (Minuto Offline)
+# Runbook — Firebase (Fiki Off)
 
 Operações para configurar, implantar regras e diagnosticar o backend Firebase.
 
@@ -22,7 +22,7 @@ Operações para configurar, implantar regras e diagnosticar o backend Firebase.
 
 ### Android
 
-1. Add app → Android → package `com.minutoofflinetemp` (verificar em `AndroidManifest`).
+1. Add app → Android → package `com.fikiofftemp` (verificar em `AndroidManifest`).
 2. Baixar `google-services.json` → `android/app/`.
 3. Adicionar SHA-1 e SHA-256 (debug e release):
 
@@ -35,7 +35,7 @@ cd android && ./gradlew signingReport
 ### iOS
 
 1. Add app → iOS → bundle ID do Xcode.
-2. Baixar `GoogleService-Info.plist` → `ios/MinutoOffline/`.
+2. Baixar `GoogleService-Info.plist` → `ios/FikiOff/`.
 3. Xcode → Signing & Capabilities → **Sign in with Apple**.
 4. URL Types → reversed client ID do plist.
 

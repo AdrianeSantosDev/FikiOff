@@ -1,4 +1,4 @@
-# Threat model — Minuto Offline
+# Threat model — Fiki Off
 
 **Versão:** 1.0  
 **Escopo:** App mobile + Firebase (Auth, Firestore)

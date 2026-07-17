@@ -1,4 +1,4 @@
-# Arquitetura de negócio — Minuto Offline
+# Arquitetura de negócio — Fiki Off
 
 **Fase TOGAF:** B (Business Architecture)
 

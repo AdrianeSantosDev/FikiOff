@@ -11,11 +11,12 @@ function pad(n: number): string {
 }
 
 export function msToHMS(ms: number): string {
-  const s = Math.floor(ms / 1000);
-  const h = Math.floor(s / 3600);
-  const m = Math.floor((s % 3600) / 60);
-  const sec = s % 60;
-  return `${pad(h)}:${pad(m)}:${pad(sec)}`;
+  const totalSeconds = Math.floor(ms / 1000);
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  const msPart = ms % 1000;
+  return `${pad(m)}:${pad(s)},${String(msPart).padStart(2, '0')}`;
 }
 
 export function useOfflineTimer() {
@@ -37,7 +38,7 @@ export function useOfflineTimer() {
       if (startTimeRef.current) {
         setElapsedMs(Date.now() - startTimeRef.current);
       }
-    }, 1000);
+    }, 100);
   }, []);
 
   const stopOffline = useCallback(() => {
@@ -59,7 +60,7 @@ export function useOfflineTimer() {
     setElapsedMs(0);
     setTotalTodayMs(prev => prev + finalMs);
     setSessionCount(prev => prev + 1);
-    setHistory(prev => [newSession, ...prev].slice(0, 5));
+    setHistory(prev => [newSession, ...prev].slice(0, 3));
     startTimeRef.current = null;
 
     return newSession;

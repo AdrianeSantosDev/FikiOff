@@ -1,4 +1,4 @@
-# Arquitetura de dados — Minuto Offline
+# Arquitetura de dados — Fiki Off
 
 **Fase TOGAF:** C (Data Architecture)
 

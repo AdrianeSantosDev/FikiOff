@@ -8,7 +8,7 @@
 
 ## Contexto
 
-O Minuto Offline precisa de autenticação social, persistência de sessões e leaderboards comparativos. O código atual é um protótipo React Native sem backend.
+O Fiki Off precisa de autenticação social, persistência de sessões e leaderboards comparativos. O código atual é um protótipo React Native sem backend.
 
 ## Decisão
 

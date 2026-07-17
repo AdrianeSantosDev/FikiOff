@@ -1,8 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function MapaScreen({ navigation }) {
+// Design
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
+import { MaterialIcons as Icon } from '@expo/vector-icons';
+
+// Third-party
+import { router } from 'expo-router';
+import HeaderMenu from '../components/HeaderMenu';
+
+export default function MapaScreen() {
   // Dados simulados do histórico de doações
   const doacoes = [
     { id: '1', data: '10/06', minutos: '109 Minutos' },
@@ -14,8 +20,8 @@ export default function MapaScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
+      <HeaderMenu />
       <View style={styles.header}>
-        <Icon name="menu" size={30} color="#fff" style={styles.menuIcon} />
         <View style={styles.logoRow}>
           <Text style={styles.logoText}>FikiOff</Text>
           <Icon name="opacity" size={24} color="#2dcf54" style={{ marginLeft: 5 }} />
@@ -61,7 +67,7 @@ export default function MapaScreen({ navigation }) {
         {/* Botão para voltar */}
         <TouchableOpacity 
           style={styles.backButton} 
-          onPress={() => navigation.goBack()}
+          onPress={() => router.push('/events')}
         >
           <Icon name="arrow-back" size={20} color="#00d7c3" />
           <Text style={styles.backButtonText}>Voltar para Eventos</Text>
