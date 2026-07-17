@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'react-native';
-import { WATERCOLOR_THEME as theme } from '../src/theme';
+import { WATERCOLOR_THEME as theme } from '../src/constants/theme';
 
 export default function RootLayout() {
   return (

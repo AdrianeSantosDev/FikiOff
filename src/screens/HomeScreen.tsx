@@ -17,7 +17,7 @@ import {
 // Internal
 import StatsRow from '../components/StatsRow';
 import MainButton from '../components/MainButton';
-import { WATERCOLOR_THEME as theme } from '../theme';
+import { WATERCOLOR_THEME as theme } from '../constants/theme';
 import TimerDisplay from '../components/TimerDisplay';
 import SessionHistory from '../components/SessionHistory';
 import { useOfflineTimer } from '../hooks/useOfflineTimer';
@@ -26,6 +26,7 @@ import AirplaneModeModal from '../components/AirplaneModeModal';
 // Third-party
 import { router } from 'expo-router';
 import NetInfo from '@react-native-community/netinfo';
+import HeaderMenu from '../components/HeaderMenu';
 
 function pad(n: number) {
   return String(n).padStart(2, '0');
@@ -205,7 +206,7 @@ export default function HomeScreen() {
             <Text style={styles.batteryIcon}>▮</Text>
           </View>
         </View> */}
-
+      <HeaderMenu />
         {/* ── App Header ── */}
         <View style={styles.header}>
           <Text style={styles.appTitle}>Fiki Off</Text>
